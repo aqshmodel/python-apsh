@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'registration.apps.RegistrationConfig',
+    'offer.apps.OfferConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -85,8 +86,6 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
-
-AUTH_USER_MODEL = 'registration.User'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
