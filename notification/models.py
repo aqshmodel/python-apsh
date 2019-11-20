@@ -16,7 +16,7 @@ class JobSeekerNotice(models.Model):
     date_replied = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return OfferList.recruiter.family_name+OfferList.recruiter.first_name+'さんからのオファー'+OfferList.job_name
+        return self.offer_list.recruiter.family_name+'さんからオファー「'+self.offer_list.job_name+'」'
 
 
 class RecruiterNotice(models.Model):
@@ -31,4 +31,4 @@ class RecruiterNotice(models.Model):
     date_hire = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return JobSeekerNotice.offer_list.job_seeker.family_name+JobSeekerNotice.offer_list.job_seeker.first_name+'さんから案件名「'+JobSeekerNotice.offer_list.job_name+'」への返信'
+        return '案件名「'+self.job_seeker_notice.offer_list.job_name+'」への返信'

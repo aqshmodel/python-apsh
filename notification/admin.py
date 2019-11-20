@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import RecruiterNotice, JobSeekerNotice
+
+admin.site.register(RecruiterNotice)
+admin.site.register(JobSeekerNotice)
