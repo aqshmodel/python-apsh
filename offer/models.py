@@ -23,5 +23,5 @@ class OfferList(models.Model):
     date_offered = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.recruiter.family_name+self.recruiter.first_name+'さんの案件「'+self.job_name+'」'
+        return self.recruiter.user.full_name+'さんの案件「'+self.job_name+'」'
 

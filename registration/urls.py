@@ -11,6 +11,8 @@ urlpatterns = [
     path('profile/', views.profile, name='profile'),
     path('regist/', views.regist, name='regist'),
     path('regist_save/', views.regist_save, name='regist_save'),
+    # path('login/', views.login, name='login'),
+    # path('logout/', views.logout, name='logout'),
     path('login/', auth_views.LoginView.as_view(template_name='login.html', authentication_form=LoginForm), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
 ]

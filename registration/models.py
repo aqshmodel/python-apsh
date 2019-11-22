@@ -1,27 +1,113 @@
 import datetime
 
+from django.contrib.auth.base_user import BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.core.mail import send_mail
 from django.db import models
 from django.utils import timezone
 from django.core.validators import RegexValidator
 
 
-class JobSeeker(models.Model):
+class UserManager(BaseUserManager):
+    use_in_migrations = True
 
+    def _create_user(self, email, password, **extra_fields):
+
+        if not email:
+            raise ValueError('The given email must be set')
+        email = self.normalize_email(email)
+
+        user = self.model(email=email, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_user(self, email, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', False)
+        extra_fields.setdefault('is_superuser', False)
+        return self._create_user(email, password, **extra_fields)
+
+    def create_superuser(self, email, password, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+
+        if extra_fields.get('is_staff') is not True:
+            raise ValueError('Superuser must have is_staff=True.')
+        if extra_fields.get('is_superuser') is not True:
+            raise ValueError('Superuser must have is_superuser=True.')
+
+        return self._create_user(email, password, **extra_fields)
+
+
+class User(AbstractBaseUser, PermissionsMixin):
+    PURPOSE_CHOICES = (
+        ('1', '求職中'),
+        ('2', '求人中'),
+    )
+
+    username = models.CharField(
+        verbose_name='ユーザーネーム',
+        max_length=150,
+        unique=True,
+    )
+
+    last_name = models.CharField(max_length=20, verbose_name='姓')
+    first_name = models.CharField(max_length=20, verbose_name='名')
+    ruby_last_name = models.CharField(max_length=20, verbose_name='ふりがな(姓)')
+    ruby_first_name = models.CharField(max_length=20, verbose_name='ふりがな(名)')
+    full_name = models.CharField(verbose_name='氏名', max_length=150, blank=True)
+    email = models.EmailField(verbose_name='Eメールアドレス', blank=True, unique=True)
+    purpose = models.CharField(max_length=1, blank=True, verbose_name='状況', choices=PURPOSE_CHOICES)
+
+    is_staff = models.BooleanField(
+        'staff status',
+        default=False,
+        help_text=(
+            'Designates whether the user can log into this admin site.'),
+    )
+    is_active = models.BooleanField(
+        'active',
+        default=True,
+        help_text=(
+            'Designates whether this user should be treated as active. '
+            'Unselect this instead of deleting accounts.'
+        ),
+    )
+    date_joined = models.DateTimeField('date joined', default=timezone.now)
+
+    objects = UserManager()
+
+    EMAIL_FIELD = 'email'
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['email', ]
+
+    class Meta:
+        verbose_name = 'user'
+        verbose_name_plural = 'users'
+
+    def clean(self):
+        super().clean()
+        self.email = self.__class__.objects.normalize_email(self.email)
+
+    def email_user(self, subject, message, from_email=None, **kwargs):
+        send_mail(subject, message, from_email, [self.email], **kwargs)
+
+    def get_full_name(self):
+        return self.last_name + self.first_name
+
+    def get_short_name(self):
+        return self.last_name
+
+
+class JobSeeker(models.Model):
     GENDER_CHOICES = (
         (1, '男性'),
         (2, '女性'),
     )
 
-    family_name = models.CharField(max_length=20, verbose_name='姓')
-    first_name = models.CharField(max_length=20, verbose_name='名')
-    ruby_family_name = models.CharField(max_length=20, verbose_name='ふりがな(姓)')
-    ruby_first_name = models.CharField(max_length=20, verbose_name='ふりがな(名)')
+    user = models.ForeignKey(User, verbose_name='ユーザー', on_delete=models.CASCADE)
     gender = models.IntegerField(verbose_name='性別', choices=GENDER_CHOICES)
     date_of_birth = models.DateField(verbose_name='誕生日')
-    date_joined = models.DateTimeField(auto_now_add=True)
-    email = models.EmailField(max_length=255, unique=True, verbose_name='Eメールアドレス')
-    password = models.CharField(max_length=20, verbose_name='パスワード')
     postal_code_regex = RegexValidator(regex=r'^[0-9]+$', message="正しい郵便番号を入力してください")
     postal_code = models.CharField(validators=[postal_code_regex], max_length=7, verbose_name='郵便番号')
     address = models.CharField(max_length=120, verbose_name='住所')
@@ -30,22 +116,18 @@ class JobSeeker(models.Model):
     phone_number = models.CharField(validators=[phone_number_regex], max_length=15, verbose_name='電話番号')
     Academic_history = models.CharField(max_length=50, verbose_name='最終学歴')
 
-    def email_user(self, subject, message, from_email=None, **kwargs):
-        send_mail(subject, message, from_email, [self.email], **kwargs)
-
     @property
     def username(self):
-        return self.email
+        return self.user.email
 
     def __str__(self):
-        return self.family_name+self.first_name
+        return self.user.full_name
 
     def was_published_recently(self):
-        return self.date_joined >= timezone.now() - datetime.timedelta(days=1)
+        return self.user.date_joined >= timezone.now() - datetime.timedelta(days=1)
 
 
 class DesiredCondition(models.Model):
-
     CHANGE_CHOICES = (
         (1, '転職'),
         (2, '副業'),
@@ -58,32 +140,22 @@ class DesiredCondition(models.Model):
     hourly_wage = models.IntegerField(verbose_name='希望時給')
 
     def __str__(self):
-        return self.job_seeker.family_name+self.job_seeker.first_name+'さんの希望条件'
+        return self.job_seeker.user.full_name + 'さんの希望条件'
 
 
 class Recruiter(models.Model):
-
-    family_name = models.CharField(max_length=20, verbose_name='姓')
-    first_name = models.CharField(max_length=20, verbose_name='名')
-    ruby_family_name = models.CharField(max_length=20, verbose_name='ふりがな(姓)')
-    ruby_first_name = models.CharField(max_length=20, verbose_name='ふりがな(名)')
+    user = models.ForeignKey(User, verbose_name='ユーザー', on_delete=models.CASCADE)
     company_name = models.CharField(max_length=50, verbose_name='所属企業名')
     ruby_company_name = models.CharField(max_length=50, verbose_name='ふりがな(所属企業名)')
-    date_joined = models.DateTimeField(auto_now_add=True)
-    email = models.EmailField(max_length=255, unique=True, verbose_name='Eメールアドレス')
-    password = models.CharField(max_length=20, verbose_name='パスワード')
     postal_code_regex = RegexValidator(regex=r'^[0-9]+$', message="正しい郵便番号を入力してください")
     postal_code = models.CharField(validators=[postal_code_regex], max_length=7, verbose_name='郵便番号')
     address = models.CharField(max_length=120, verbose_name='住所')
     phone_number_regex = RegexValidator(regex=r'^[0-9]+$', message="正しい電話番号を入力してください")
     phone_number = models.CharField(validators=[phone_number_regex], max_length=15, verbose_name='電話番号')
 
-    def email_user(self, subject, message, from_email=None, **kwargs):
-        send_mail(subject, message, from_email, [self.email], **kwargs)
-
     @property
     def username(self):
-        return self.email
+        return self.user.email
 
     def __str__(self):
-        return self.family_name+self.first_name
+        return self.user.full_name

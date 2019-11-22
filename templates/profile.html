@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-user.username（名前） : {{ user.username }}<hr>
+user.family_name（氏名） : {{ user.full_name }}<hr>
 user.is_staff(/adminにログインできるか) : {{ user.is_staff }}<hr>
 user.is_active(アカウントはアクティブか、通常のログインはできるか) : {{ user.is_active }}<hr>
 user.is_superuser（スーパーユーザー　ですか） : {{ user.is_superuser }}<hr>

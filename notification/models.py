@@ -16,7 +16,7 @@ class JobSeekerNotice(models.Model):
     date_replied = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.offer_list.recruiter.family_name+'さんからオファー「'+self.offer_list.job_name+'」'
+        return self.offer_list.recruiter.user.full_name+'さんから「'+self.offer_list.job_name+'のオファー」'
 
 
 class RecruiterNotice(models.Model):
