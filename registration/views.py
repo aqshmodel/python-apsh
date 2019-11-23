@@ -1,12 +1,8 @@
-from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, redirect
 from django.views.decorators.http import require_POST
-from .forms import (LoginForm, RegisterForm, JobSeekerForm)
-from django.contrib.auth import views as auth_views
-from django.urls import reverse_lazy
-from django.contrib.auth.models import User
-from django.http import HttpResponse, HttpResponseRedirect
+
+from .forms import (RegisterForm, JobSeekerForm, DesiredConditionForm)
 
 
 def index(request):
@@ -15,13 +11,6 @@ def index(request):
     }
     return render(request, 'index.html', context)
 
-
-@require_POST
-def login(request):
-    context = {
-        'user': request.user,
-    }
-    return render(request, 'index.html', context)
 #
 #
 # def logout(request):
@@ -31,7 +20,6 @@ def login(request):
 #     return auth_views.logout(request, **context)
 
 
-@login_required
 def profile(request):
     context = {
         'user': request.user,
@@ -45,6 +33,28 @@ def role(request):
         'user': request.user,
     }
     return render(request, 'role.html', context)
+
+
+def desired_condition(request):
+    form = DesiredConditionForm(request.POST or None)
+    context = {
+        'form': form,
+        'user': request.user,
+    }
+    return render(request, 'desired_condition.html', context)
+
+
+@require_POST
+def desired_condition_save(request):
+    form = DesiredConditionForm(request.POST)
+    if form.is_valid():
+        form.save(commit=True)
+        return redirect('role.html')
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'desired_condition.html', context)
 
 
 def jobseeker(request):
@@ -61,12 +71,12 @@ def jobseeker_save(request):
     form = JobSeekerForm(request.POST)
     if form.is_valid():
         form.save(commit=True)
-        return render(request, 'role.html', context={'form': form})
+        return redirect('role.html')
 
     context = {
         'form': form,
     }
-    return render(request, 'role.html', context)
+    return render(request, 'jobseeker.html', context)
 
 
 def regist(request):
@@ -82,7 +92,7 @@ def regist_save(request):
     form = RegisterForm(request.POST)
     if form.is_valid():
         form.save(commit=True)
-        return render(request, 'role.html', context={'form': form})
+        return redirect('role.html')
 
     context = {
         'form': form,

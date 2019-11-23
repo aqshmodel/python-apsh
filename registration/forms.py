@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
 
-from registration.models import User, JobSeeker
+from registration.models import User, JobSeeker, DesiredCondition
 
 
 class RegisterForm(UserCreationForm):
@@ -60,3 +60,22 @@ class JobSeekerForm(forms.ModelForm):
         self.fields['nearest_station'].widget.attrs['class'] = 'form-control'
         self.fields['phone_number'].widget.attrs['class'] = 'form-control'
         self.fields['Academic_history'].widget.attrs['class'] = 'form-control'
+
+
+class DesiredConditionForm(forms.ModelForm):
+    class Meta:
+        model = DesiredCondition
+        fields = (
+                  'skills',
+                  'job_change',
+                  'monthly_income',
+                  'hourly_wage',
+                  'job_seeker'
+                  )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['skills'].widget.attrs['class'] = 'form-control'
+        self.fields['job_change'].widget.attrs['class'] = 'form-control'
+        self.fields['monthly_income'].widget.attrs['class'] = 'form-control'
+        self.fields['hourly_wage'].widget.attrs['class'] = 'form-control'
