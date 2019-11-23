@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block content %}
+
+<form class="my-form" action="{% url 'registration:jobseeker_save' %}" method="POST">
+{% csrf_token %}
+
+  <div class="form-group">
+    <label for="id_gender">性別</label>
+    {{ form.gender }}
+    {{ form.gender.errors }}
+    <p class="help-block">{{ form.gender.help_text }}</p>
+  </div>
+
+  <div class="form-group">
+    <label for="id_date_of_birth">生年月日</label>
+    {{ form.date_of_birth }}
+    {{ form.date_of_birth.errors }}
+    <p class="help-block">{{ form.date_of_birth.help_text }}</p>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label" for="id_postal_code">郵便番号</label>
+    {{ form.postal_code }}
+    {{ form.postal_code.errors }}
+  </div>
+
+
+  <div class="form-group">
+    <label class="control-label" for="id_address">住所</label>
+      {{ form.address }}
+      {{ form.address.errors }}
+      <p class="help-block">{{ form.address.help_text }}</p>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label" for="id_nearest_station">最寄り駅</label>
+      {{ form.nearest_station }}
+      {{ form.nearest_station.errors }}
+      <p class="help-block">{{ form.nearest_station.help_text }}</p>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label" for="id_phone_number">電話番号</label>
+      {{ form.phone_number }}
+      {{ form.phone_number.errors }}
+      <p class="help-block">{{ form.phone_number.help_text }}</p>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label" for="id_Academic_history">最終学歴</label>
+      {{ form.Academic_history }}
+      {{ form.Academic_history.errors }}
+      <p class="help-block">{{ form.Academic_history.help_text }}</p>
+  </div>
+
+  <input type="hidden" name="user" value="{{ user.id }}">
+
+  <div class="form-group">
+    <div>
+      <input type="submit" class="btn btn-default" value="登録">
+    </div>
+  </div>
+
+</form>
+{% endblock %}

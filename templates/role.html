@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div>
+    ■ Aqshアプリへの登録ありがとうございます ■
+</div>
+    <hr>
+
+    <div>
+        <a href="{% url 'registration:jobseeker' %}">仕事のオファーを受けたい方</a><br>
+    </div>
+{#    <div>#}
+{#        <a href="{% url 'recruiter' %}">仕事をオファーしたい方</a><br>#}
+{#    </div>#}
+
+{% endblock %}

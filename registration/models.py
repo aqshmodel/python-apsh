@@ -40,10 +40,6 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    PURPOSE_CHOICES = (
-        ('1', '求職中'),
-        ('2', '求人中'),
-    )
 
     username = models.CharField(
         verbose_name='ユーザーネーム',
@@ -57,7 +53,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     ruby_first_name = models.CharField(max_length=20, verbose_name='ふりがな(名)')
     full_name = models.CharField(verbose_name='氏名', max_length=150, blank=True)
     email = models.EmailField(verbose_name='Eメールアドレス', blank=True, unique=True)
-    purpose = models.CharField(max_length=1, blank=True, verbose_name='状況', choices=PURPOSE_CHOICES)
 
     is_staff = models.BooleanField(
         'staff status',
