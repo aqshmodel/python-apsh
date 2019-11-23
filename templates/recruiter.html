@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block content %}
+
+<form class="my-form" action="{% url 'registration:recruiter_save' %}" method="POST">
+{% csrf_token %}
+
+  <div class="form-group">
+    <label for="id_company_name">会社名</label>
+    {{ form.company_name }}
+    {{ form.company_name.errors }}
+    <p class="help-block">{{ form.company_name.help_text }}</p>
+  </div>
+
+  <div class="form-group">
+    <label for="id_ruby_company_name">ふりがな(会社名)</label>
+    {{ form.ruby_company_name }}
+    {{ form.ruby_company_name.errors }}
+    <p class="help-block">{{ form.ruby_company_name.help_text }}</p>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label" for="id_postal_code">郵便番号(会社)</label>
+    {{ form.postal_code }}
+    {{ form.postal_code.errors }}
+  </div>
+
+
+  <div class="form-group">
+    <label class="control-label" for="id_address">住所</label>
+      {{ form.address }}
+      {{ form.address.errors }}
+      <p class="help-block">{{ form.address.help_text }}</p>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label" for="id_phone_number">電話番号</label>
+      {{ form.phone_number }}
+      {{ form.phone_number.errors }}
+      <p class="help-block">{{ form.phone_number.help_text }}</p>
+  </div>
+
+  <input type="hidden" name="user" value="{{ user.id }}">
+
+  <div class="form-group">
+    <div>
+      <input type="submit" class="btn btn-default" value="登録">
+    </div>
+  </div>
+
+</form>
+{% endblock %}

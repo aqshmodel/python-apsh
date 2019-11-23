@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.views.decorators.http import require_POST
 
-from .forms import (RegisterForm, JobSeekerForm, DesiredConditionForm)
+from .forms import (RegisterForm, JobSeekerForm, DesiredConditionForm, RecruiterForm)
 
 
 def index(request):
@@ -71,12 +71,34 @@ def jobseeker_save(request):
     form = JobSeekerForm(request.POST)
     if form.is_valid():
         form.save(commit=True)
-        return redirect('role.html')
+        return redirect('index.html')
 
     context = {
         'form': form,
     }
     return render(request, 'jobseeker.html', context)
+
+
+def recruiter(request):
+    form = RecruiterForm(request.POST or None)
+    context = {
+        'form': form,
+        'user': request.user,
+    }
+    return render(request, 'recruiter.html', context)
+
+
+@require_POST
+def recruiter_save(request):
+    form = RecruiterForm(request.POST)
+    if form.is_valid():
+        form.save(commit=True)
+        return redirect('index.html')
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'recruiter.html', context)
 
 
 def regist(request):
