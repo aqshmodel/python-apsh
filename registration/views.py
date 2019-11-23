@@ -71,7 +71,7 @@ def jobseeker_save(request):
     form = JobSeekerForm(request.POST)
     if form.is_valid():
         form.save(commit=True)
-        return redirect('index.html')
+        return redirect('registration/index.html')
 
     context = {
         'form': form,
@@ -93,7 +93,7 @@ def recruiter_save(request):
     form = RecruiterForm(request.POST)
     if form.is_valid():
         form.save(commit=True)
-        return redirect('index.html')
+        return redirect('registration/index.html')
 
     context = {
         'form': form,
