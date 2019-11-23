@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="alert alert-success" role="alert">
+  <h4 class="alert-heading">{{ user.username }}さんのプロフィール</h4>
+  <p>性別 : {{ user.jobseeker_set.first.gender }}</p>
+  <p>住所 : {{ user.jobseeker_set.first.address }}</p>
+  <p>最終学歴 : {{ user.jobseeker_set.first.Academic_history }}</p>
+  <p>スキル : {{ user.jobseeker_set.first.desiredcondition_set.first.skills }}</p>
+  <p>検討状況 : {{ user.jobseeker_set.first.desiredcondition_set.first.job_change }}</p>
+  <p>希望月収 : {{ user.jobseeker_set.first.desiredcondition_set.first.monthly_income }}</p>
+  <p>希望時給 : {{ user.jobseeker_set.first.desiredcondition_set.first.hourly_wage }}</p>
+  <p class="text-muted">登録日 : {{ user.date_joined }}</p>
+  <p class="text-muted">最終ログイン日 : {{ user.last_login }}</p>
+  <a class="btn btn-primary" href="javascript:void(0);" onclick="window.history.back();">戻る</a>
+</div>
+
+{% endblock %}

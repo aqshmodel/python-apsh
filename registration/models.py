@@ -96,12 +96,12 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 class JobSeeker(models.Model):
     GENDER_CHOICES = (
-        (1, '男性'),
-        (2, '女性'),
+        ('男性', '男性'),
+        ('女性', '女性'),
     )
 
     user = models.ForeignKey(User, verbose_name='ユーザー', on_delete=models.CASCADE)
-    gender = models.IntegerField(verbose_name='性別', choices=GENDER_CHOICES)
+    gender = models.CharField(max_length=2, verbose_name='性別', choices=GENDER_CHOICES)
     date_of_birth = models.DateField(verbose_name='誕生日')
     postal_code_regex = RegexValidator(regex=r'^[0-9]+$', message="正しい郵便番号を入力してください")
     postal_code = models.CharField(validators=[postal_code_regex], max_length=7, verbose_name='郵便番号')
@@ -124,13 +124,13 @@ class JobSeeker(models.Model):
 
 class DesiredCondition(models.Model):
     CHANGE_CHOICES = (
-        (1, '転職'),
-        (2, '副業'),
+        ('転職', '転職'),
+        ('副業', '副業'),
     )
 
     job_seeker = models.ForeignKey(JobSeeker, verbose_name='求職者', on_delete=models.CASCADE)
     skills = models.CharField(max_length=30, verbose_name='活かしたいスキル')
-    job_change = models.IntegerField(verbose_name='転職 or 副業', choices=CHANGE_CHOICES)
+    job_change = models.CharField(max_length=2, verbose_name='転職 or 副業', choices=CHANGE_CHOICES)
     monthly_income = models.IntegerField(verbose_name='希望月収')
     hourly_wage = models.IntegerField(verbose_name='希望時給')
 

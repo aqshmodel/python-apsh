@@ -35,6 +35,7 @@ LOGOUT_REDIRECT_URL = 'registration:index'
 
 INSTALLED_APPS = [
     'registration.apps.RegistrationConfig',
+    'search.apps.SearchConfig',
     'offer.apps.OfferConfig',
     'notification.apps.NotificationConfig',
     'django.contrib.admin',
