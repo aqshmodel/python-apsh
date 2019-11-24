@@ -12,7 +12,9 @@
   <p>希望時給 : {{ user.jobseeker_set.first.desiredcondition_set.first.hourly_wage }}</p>
   <p class="text-muted">登録日 : {{ user.date_joined }}</p>
   <p class="text-muted">最終ログイン日 : {{ user.last_login }}</p>
-  <a class="btn btn-primary" href="javascript:void(0);" onclick="window.history.back();">戻る</a>
+  <p><a href="{% url 'offer:offer' %}?id_no={{ user.jobseeker_set.first.id }}" onclick="document.form1.submit();return false;">
+      {{ user.username }}さんにオファーする</a></p>
+  <p><a class="btn btn-primary" href="javascript:void(0);" onclick="window.history.back();">戻る</a></p>
 </div>
 
 {% endblock %}

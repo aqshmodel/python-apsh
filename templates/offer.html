@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block content %}
+
+<form class="my-form" action="{% url 'offer:offer_save' %}" method="POST">
+{% csrf_token %}
+
+  <div class="form-group">
+    <label for="id_job_name">案件名</label>
+    {{ form.job_name }}
+    {{ form.job_name.errors }}
+    <p class="help-block">{{ form.job_name.help_text }}</p>
+  </div>
+
+  <div class="form-group">
+    <label for="id_job_details">案件詳細</label>
+    {{ form.job_details }}
+    {{ form.job_details.errors }}
+    <p class="help-block">{{ form.job_details.help_text }}</p>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label" for="id_offer_amount">オファー金額</label>
+    {{ form.offer_amount }}円
+    {{ form.offer_amount.errors }}
+  </div>
+
+
+  <div class="form-group">
+    <label class="control-label" for="id_work_location">勤務地</label>
+      {{ form.work_location }}
+      {{ form.work_location.errors }}
+      <p class="help-block">{{ form.work_location.help_text }}</p>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label" for="id_work_period">勤務期間</label>
+      {{ form.work_period }}
+      {{ form.work_period.errors }}
+      <p class="help-block">{{ form.work_period.help_text }}</p>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label" for="id_reply_deadline">応募期限</label>
+      {{ form.reply_deadline }}
+      {{ form.reply_deadline.errors }}
+      <p class="help-block">{{ form.reply_deadline.help_text }}</p>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label" for="id_Employment_status">雇用形態</label>
+      {{ form.Employment_status }}
+      {{ form.Employment_status.errors }}
+      <p class="help-block">{{ form.Employment_status.help_text }}</p>
+  </div>
+
+  <input type="hidden" name="job_seeker" value="{{ job_seeker_id }}">
+  <input type="hidden" name="recruiter" value="{{ user.recruiter_set.first.id }}">
+
+  <div class="form-group">
+    <div>
+      <input type="submit" class="btn btn-default" value="送信">
+    </div>
+  </div>
+
+</form>
+{% endblock %}
