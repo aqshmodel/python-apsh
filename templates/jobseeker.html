@@ -3,6 +3,10 @@
 
 <form class="my-form" action="{% url 'registration:jobseeker_save' %}" method="POST">
 {% csrf_token %}
+<div>
+    <H2>■ 詳細情報登録 ■</H2>
+</div>
+
 
   <div class="form-group">
     <label for="id_gender">性別</label>

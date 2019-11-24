@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+
+<ul>
+<div><h2>求人案件一覧</h2></div>
+<hr>
+  {% for item in object_list %}
+      {% ifequal item.job_seeker.id 6 %}
+            <div>
+            <p>案件名:{{ item.job_name }}</p>
+            <p>提示金額:{{ item.offer_amount }}</p>
+            <p>勤務地:{{ item.work_location }}</p>
+            <p>雇用形態:{{ item.Employment_status }}</p>
+            <p>案件発生日:{{ item.date_offered }}</p>
+                <a href="{% url 'notification:offer_list_detail' item.pk %}" class="card-link">詳細を見る</a>
+            <hr>
+            </div>
+
+      {% else %}
+
+      {% endifequal %}
+
+  {% endfor %}
+</ul>
+
+{% endblock %}

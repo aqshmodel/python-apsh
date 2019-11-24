@@ -3,7 +3,9 @@
  
 <form class="my-form" action="{% url 'registration:regist_save' %}" method="POST">
 {% csrf_token %}
-
+<div>
+    <H2>■ ユーザー登録 ■</H2>
+</div>
   <div class="form-group">
     <label for="id_username">ユーザーネーム</label>
     {{ form.username }}

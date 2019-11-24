@@ -102,7 +102,7 @@ class JobSeeker(models.Model):
 
     user = models.ForeignKey(User, verbose_name='ユーザー', on_delete=models.CASCADE)
     gender = models.CharField(max_length=2, verbose_name='性別', choices=GENDER_CHOICES)
-    date_of_birth = models.DateField(verbose_name='誕生日')
+    date_of_birth = models.DateField(verbose_name='誕生日', default='1980-01-01')
     postal_code_regex = RegexValidator(regex=r'^[0-9]+$', message="正しい郵便番号を入力してください")
     postal_code = models.CharField(validators=[postal_code_regex], max_length=7, verbose_name='郵便番号')
     address = models.CharField(max_length=120, verbose_name='住所')

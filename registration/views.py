@@ -49,7 +49,7 @@ def desired_condition_save(request):
     form = DesiredConditionForm(request.POST)
     if form.is_valid():
         form.save(commit=True)
-        return redirect('role.html')
+        return redirect('registration:index')
 
     context = {
         'form': form,
@@ -71,7 +71,7 @@ def jobseeker_save(request):
     form = JobSeekerForm(request.POST)
     if form.is_valid():
         form.save(commit=True)
-        return redirect('registration/index.html')
+        return redirect('registration:desired_condition')
 
     context = {
         'form': form,
@@ -93,7 +93,7 @@ def recruiter_save(request):
     form = RecruiterForm(request.POST)
     if form.is_valid():
         form.save(commit=True)
-        return redirect('registration/index.html')
+        return redirect('registration:index')
 
     context = {
         'form': form,
@@ -114,7 +114,7 @@ def regist_save(request):
     form = RegisterForm(request.POST)
     if form.is_valid():
         form.save(commit=True)
-        return redirect('role.html')
+        return redirect('registration:role')
 
     context = {
         'form': form,

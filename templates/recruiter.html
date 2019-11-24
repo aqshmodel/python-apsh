@@ -2,6 +2,11 @@
 {% block content %}
 
 <form class="my-form" action="{% url 'registration:recruiter_save' %}" method="POST">
+
+<div>
+    <H2>■ 詳細情報登録 ■</H2>
+</div>
+
 {% csrf_token %}
 
   <div class="form-group">

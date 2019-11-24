@@ -1,9 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
-user.family_name（氏名） : {{ user.id }}<hr>
-user.is_staff(/adminにログインできるか) : {{ user.is_staff }}<hr>
-user.is_active(アカウントはアクティブか、通常のログインはできるか) : {{ user.is_active }}<hr>
-user.is_superuser（スーパーユーザー　ですか） : {{ user.is_superuser }}<hr>
-user.last_login(最期のログイン) : {{ user.last_login }}<hr>
-user.date_joined（アカウントの作られた日） : {{ user.date_joined }}
+<form class="my-form">
+<div>
+    <H2>■ 登録情報 ■</H2>
+</div>
+
+    ユーザーネーム : {{ user.username }}<hr>
+    最期のログイン : {{ user.last_login }}<hr>
+    氏名         : {{ user.last_login }} {{ user.first_name }}<hr>
+    ふりがな      : {{ user.ruby_last_name }} {{ user.ruby_first_name }}<hr>
+    Eメールアドレス: {{ user.email }}
+</form>
 {% endblock %}

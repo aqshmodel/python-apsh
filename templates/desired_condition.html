@@ -3,7 +3,9 @@
 
 <form class="my-form" action="{% url 'registration:desired_condition_save' %}" method="POST">
 {% csrf_token %}
-
+<div>
+    <H2>■ 希望条件登録 ■</H2>
+</div>
   <div class="form-group">
     <label for="id_skills">スキル</label>
     {{ form.skills }}
@@ -20,14 +22,14 @@
 
   <div class="form-group">
     <label class="control-label" for="id_monthly_income">希望月収</label>
-    {{ form.monthly_income }}
+    {{ form.monthly_income }}円
     {{ form.monthly_income.errors }}
   </div>
 
 
   <div class="form-group">
     <label class="control-label" for="id_hourly_wage">希望時給</label>
-      {{ form.hourly_wage }}
+      {{ form.hourly_wage }}円
       {{ form.hourly_wage.errors }}
       <p class="help-block">{{ form.hourly_wage.help_text }}</p>
   </div>

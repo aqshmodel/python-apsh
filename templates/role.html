@@ -1,16 +1,16 @@
 {% extends "base.html" %}
 {% block content %}
-
+<form class="my-form">
 <div>
-    ■ Aqshアプリへの登録ありがとうございます ■
+    <H2>■ Aqshアプリへの登録ありがとうございます ■</H2>
 </div>
     <hr>
 
     <div>
         <a href="{% url 'registration:jobseeker' %}">仕事のオファーを受けたい方</a><br>
     </div>
-{#    <div>#}
-{#        <a href="{% url 'recruiter' %}">仕事をオファーしたい方</a><br>#}
-{#    </div>#}
-
+    <div>
+        <a href="{% url 'registration:recruiter' %}">仕事をオファーしたい方</a><br>
+    </div>
+</form>
 {% endblock %}
