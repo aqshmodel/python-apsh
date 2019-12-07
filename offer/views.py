@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views.decorators.http import require_POST
 
-from registration.models import JobSeeker
+from registration.models import JobSeeker, Recruiter
 from offer.forms import OfferForm
 from django.core.mail import EmailMessage
 
@@ -28,14 +28,18 @@ def offer(request):
 def offer_save(request):
     form = OfferForm(request.POST)
     job_seeker_id = int(request.POST['job_seeker'])
+    job_name = request.POST['job_name']
+    recruiter_id = request.POST['recruiter']
+
     if form.is_valid():
         form.save(commit=True)
-
         target_job_seeker = JobSeeker.objects.get(pk=job_seeker_id)
         to_email = target_job_seeker.user.email
+        target_recruiter = Recruiter.objects.get(pk=recruiter_id)
+        recruiter_name = target_recruiter.user.username
 
-        subject = "Aqshアプリから案件のオファー"
-        message = "オファーが届いています"
+        subject = "Aqshアプリから「" + job_name + "」のオファー"
+        message = recruiter_name + "さんからオファーが届いています。Aqshアプリにアクセスして内容をご確認ください。"
         from_email = os.environ['EMAIL_HOST_USER']
         recipient_list = to_email  # 宛先
         email = EmailMessage(subject, message, from_email,  [recipient_list])
