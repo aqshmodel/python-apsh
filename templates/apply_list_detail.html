@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <div class="alert alert-success" role="alert">
+        <h4 class="alert-heading">オファーした案件名 : {{ jobseekernotice.offer_list.job_name }}</h4>
+        <p>案件詳細 : {{ jobseekernotice.offer_list.job_details }}</p>
+        <p>オファーした日時 : {{ jobseekernotice.offer_list.date_offered }}</p>
+        <p>返信内容 : {{ jobseekernotice.reply_offer }}</p>
+        <hr>
+        <h4 class="alert-heading">{{ jobseekernotice.offer_list.job_seeker.user.username }}さんのプロフィール</h4>
+        <p>性別 : {{ jobseekernotice.offer_list.job_seeker.user.jobseeker_set.first.gender }}</p>
+        <p>住所 : {{ jobseekernotice.offer_list.job_seeker.user.jobseeker_set.first.address }}</p>
+        <p>最終学歴 : {{ jobseekernotice.offer_list.job_seeker.user.jobseeker_set.first.Academic_history }}</p>
+        <p>スキル
+            : {{ jobseekernotice.offer_list.job_seeker.user.jobseeker_set.first.desiredcondition_set.first.skills }}</p>
+        <p>検討状況
+            : {{ jobseekernotice.offer_list.job_seeker.user.jobseeker_set.first.desiredcondition_set.first.job_change }}</p>
+        <p>希望月収
+            : {{ jobseekernotice.offer_list.job_seeker.user.jobseeker_set.first.desiredcondition_set.first.monthly_income }}</p>
+        <p>希望時給
+            : {{ jobseekernotice.offer_list.job_seeker.user.jobseeker_set.first.desiredcondition_set.first.hourly_wage }}</p>
+        <p class="text-muted">登録日 : {{ jobseekernotice.offer_list.job_seeker.user.date_joined }}</p>
+        <p class="text-muted">最終ログイン日 : {{ jobseekernotice.offer_list.job_seeker.user.last_login }}</p>
+        {#  <p><a href="{% url 'offer:offer' %}?id_no={{ user.jobseeker_set.first.id }}" onclick="document.form1.submit();return false;">#}
+        {#      {{ user.username }}さんにオファーする</a></p>#}
+        <p><a class="btn btn-primary" href="javascript:void(0);" onclick="window.history.back();">戻る</a></p>
+    </div>
+
+{% endblock %}

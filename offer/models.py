@@ -9,7 +9,9 @@ class OfferList(models.Model):
     EMPLOYMENT_CHOICES = (
         ('正社員', '正社員'),
         ('契約社員', '契約社員'),
-        ('アルバイト', 'アルバイト')
+        ('アルバイト', 'アルバイト'),
+        ('派遣社員', '派遣社員'),
+        ('その他', 'その他'),
     )
 
     recruiter = models.ForeignKey(Recruiter, verbose_name='リクルーター', on_delete=models.CASCADE)

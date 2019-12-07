@@ -8,7 +8,10 @@
 </div>
 
 {% csrf_token %}
-
+    {% if user.recruiter_set.first.id %}
+        <p>既に登録頂いております。求職者へオファーを送りましょう。</p>
+        <a class="nav-link" href="{% url 'search:job_seekers_list' %}">求職者検索へ</a>
+    {% else %}
   <div class="form-group">
     <label for="id_company_name">会社名</label>
     {{ form.company_name }}
@@ -53,4 +56,5 @@
   </div>
 
 </form>
+    {% endif %}
 {% endblock %}

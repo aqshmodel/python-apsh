@@ -6,8 +6,16 @@
 <div>
     <H2>■ 詳細情報登録 ■</H2>
 </div>
+    {% if user.jobseeker_set.first.id %}
+        {% if user.jobseeker_set.first.desiredcondition_set.first.id %}
+            <p>既に登録頂いております。オファーを待ちましょう。</p>
+            <a class="nav-link" href="{% url 'registration:index' %}">戻る</a>
+        {% else %}
+            <p>既にオファーが受けられる状態です。希望条件を登録することでオファーが受けやすくなります。</p>
+            <a class="nav-link" href="{% url 'registration:desired_condition' %}">希望条件の登録へ</a>
+        {% endif %}
 
-
+    {% else %}
   <div class="form-group">
     <label for="id_gender">性別</label>
     {{ form.gender }}
@@ -66,4 +74,5 @@
   </div>
 
 </form>
+    {% endif %}
 {% endblock %}

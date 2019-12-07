@@ -57,7 +57,7 @@ def offer_save(request):
         target_recruiter = Recruiter.objects.get(pk=recruiter_id)
         recruiter_name = target_recruiter.user.username
 
-        subject = "Aqshアプリから「" + job_name + "」のオファー"
+        subject = "Aqshアプリより「" + job_name + "」のオファーのお知らせ"
         message = recruiter_name + "さんからオファーが届いています。Aqshアプリにアクセスして内容をご確認ください。"
         from_email = os.environ['EMAIL_HOST_USER']
         recipient_list = to_email  # 宛先

@@ -13,7 +13,33 @@
   <p>案件発生日 : {{ offerlist.date_offered }}</p>
   <p>応募期限 : {{ offerlist.reply_deadline }}</p>
 
-  <p><a class="btn btn-primary" href="javascript:void(0);" onclick="window.history.back();">戻る</a></p>
 </div>
+
+    <form class="my-form" action="{% url 'notification:reply_save' %}" method="POST">
+        {% csrf_token %}
+
+        <input type="hidden" name="offer_list" value="{{ offerlist.id }}">
+        <div class="form-group">
+            <div>
+                <input type="hidden" name="reply_offer" value="応募する">
+                <input type="submit" class="btn btn-default" value="応募する">
+            </div>
+        </div>
+
+    </form>
+
+    <form class="my-form" action="{% url 'notification:reply_save' %}" method="POST">
+        {% csrf_token %}
+
+        <input type="hidden" name="offer_list" value="{{ offerlist.id }}">
+        <div class="form-group">
+            <div>
+                <input type="hidden" name="reply_offer" value="辞退する">
+                <input type="submit" class="btn btn-default" value="辞退する">
+            </div>
+        </div>
+
+    </form>
+    <p><a class="btn btn-primary" href="javascript:void(0);" onclick="window.history.back();">戻る</a></p>
 
 {% endblock %}

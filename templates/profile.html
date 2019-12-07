@@ -7,8 +7,59 @@
 
     ユーザーネーム : {{ user.username }}<hr>
     最期のログイン : {{ user.last_login }}<hr>
-    氏名         : {{ user.last_login }} {{ user.first_name }}<hr>
+    氏名 : {{ user.last_name }} {{ user.first_name }}
+    <hr>
     ふりがな      : {{ user.ruby_last_name }} {{ user.ruby_first_name }}<hr>
     Eメールアドレス: {{ user.email }}
+    <hr>
+    {% if user.jobseeker_set.first.id %}
+        <h4>基本情報</h4>
+        <hr>
+        性別:{{ user.jobseeker_set.first.gender }}
+        <hr>
+        生年月日:{{ user.jobseeker_set.first.date_of_birth }}
+        <hr>
+        郵便番号:{{ user.jobseeker_set.first.postal_code }}
+        <hr>
+        住所:{{ user.jobseeker_set.first.address }}
+        <hr>
+        最寄り駅:{{ user.jobseeker_set.first.nearest_station }}
+        <hr>
+        電話番号:{{ user.jobseeker_set.first.phone_number }}
+        <hr>
+        最終学歴:{{ user.jobseeker_set.first.Academic_history }}
+        <hr>
+        {% if user.jobseeker_set.first.desiredcondition_set.first.id %}
+            スキル:{{ user.jobseeker_set.first.desiredcondition_set.first.skills }}
+            <hr>
+            希望月収:{{ user.jobseeker_set.first.desiredcondition_set.first.monthly_income }}
+            <hr>
+            希望時給:{{ user.jobseeker_set.first.desiredcondition_set.first.hourly_wage }}
+            <hr>
+            転職 or 副業:{{ user.jobseeker_set.first.desiredcondition_set.first.job_change }}
+            <hr>
+        {% else %}
+            <a href="{% url 'registration:desired_condition' %}">詳細な希望条件はこちらから登録</a><br>
+        {% endif %}
+    {% else %}
+        <a href="{% url 'registration:jobseeker' %}">仕事のオファーを受けたい方はこちらから登録</a><br>
+    {% endif %}
+
+    {% if user.recruiter_set.first.id %}
+        <h4>リクルーター登録情報</h4>
+        <hr>
+        会社名:{{ user.recruiter_set.first.company_name }}
+        <hr>
+        ふりがな:{{ user.recruiter_set.first.ruby_company_name }}
+        <hr>
+        郵便番号:{{ user.recruiter_set.first.postal_code }}
+        <hr>
+        住所:{{ user.recruiter_set.first.address }}
+        <hr>
+        電話番号:{{ user.recruiter_set.first.phone_number }}
+        <hr>
+    {% else %}
+        <a href="{% url 'registration:recruiter' %}">仕事のオファーをしたい方はこちらから登録</a><br>
+    {% endif %}
 </form>
 {% endblock %}
