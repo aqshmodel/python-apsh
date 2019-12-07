@@ -5,7 +5,6 @@
 <div><h2>求職者一覧</h2></div>
 <hr>
   {% for item in object_list %}
-      {% if item.jobseeker_set.first.id %}
             <div>
             <p>{{ item.username }}さん</p>
             <p>{{ item.jobseeker_set.first.gender }}</p>
@@ -15,10 +14,6 @@
                 <a href="{% url 'search:job_seekers_detail' item.pk %}" class="card-link">プロフィールを見る</a>
             <hr>
             </div>
-
-      {% else %}
-
-      {% endif %}
 
   {% endfor %}
 </ul>

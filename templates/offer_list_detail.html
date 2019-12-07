@@ -6,15 +6,12 @@
   <p>内容 : {{ offerlist.job_details }}</p>
   <p>提示金額 : {{ offerlist.offer_amount }}</p>
   <p>会社名 : {{ offerlist.recruiter.company_name }}</p>
-  <p>担当者名 : {{ offerlist.recruiter.username }}</p>
+    <p>担当者名 : {{ offerlist.recruiter.user.username }}</p>
   <p>勤務地 : {{ offerlist.work_location }}</p>
   <p>期間 : {{ offerlist.work_period }}</p>
   <p>雇用形態 : {{ offerlist.Employment_status }}</p>
   <p>案件発生日 : {{ offerlist.date_offered }}</p>
   <p>応募期限 : {{ offerlist.reply_deadline }}</p>
-
-  <p class="text-muted">登録日 : {{ user.date_joined }}</p>
-  <p class="text-muted">最終ログイン日 : {{ user.last_login }}</p>
 
   <p><a class="btn btn-primary" href="javascript:void(0);" onclick="window.history.back();">戻る</a></p>
 </div>
