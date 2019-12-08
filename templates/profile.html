@@ -39,10 +39,10 @@
             転職 or 副業:{{ user.jobseeker_set.first.desiredcondition_set.first.job_change }}
             <hr>
         {% else %}
-            <a href="{% url 'registration:desired_condition' %}">詳細な希望条件はこちらから登録</a><br>
+            <a class="btn btn-primary" href="{% url 'registration:desired_condition' %}">詳細な希望条件はこちらから登録</a><br>
         {% endif %}
     {% else %}
-        <a href="{% url 'registration:jobseeker' %}">仕事のオファーを受けたい方はこちらから登録</a><br>
+        <a class="btn btn-primary" href="{% url 'registration:jobseeker' %}">仕事のオファーを受けたい方はこちらから登録</a><br>
     {% endif %}
 
     {% if user.recruiter_set.first.id %}
@@ -59,7 +59,7 @@
         電話番号:{{ user.recruiter_set.first.phone_number }}
         <hr>
     {% else %}
-        <a href="{% url 'registration:recruiter' %}">仕事のオファーをしたい方はこちらから登録</a><br>
+        <a class="btn btn-primary" href="{% url 'registration:recruiter' %}">仕事のオファーをしたい方はこちらから登録</a><br>
     {% endif %}
 </form>
-{% endblock %}
+{% endblock content %}

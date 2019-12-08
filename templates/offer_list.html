@@ -11,11 +11,12 @@
             <p>勤務地:{{ item.work_location }}</p>
             <p>雇用形態:{{ item.Employment_status }}</p>
             <p>案件発生日:{{ item.date_offered }}</p>
-                <a href="{% url 'offer:offer_list_detail' item.pk %}" class="card-link">詳細を見る</a>
+                <a class="btn btn-primary" href="{% url 'offer:offer_list_detail' item.pk %}"
+                   class="card-link">詳細を見る</a>
             <hr>
             </div>
 
   {% endfor %}
 </ul>
 
-{% endblock %}
+{% endblock content %}
