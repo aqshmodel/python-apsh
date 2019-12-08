@@ -7,11 +7,11 @@ from registration.models import Recruiter, JobSeeker
 class JobSeekerNotice(models.Model):
 
     offer_list = models.ForeignKey(OfferList, verbose_name='案件リスト', on_delete=models.CASCADE)
-    reply_offer = models.CharField(max_length=5, verbose_name='応募 or 辞退')
+    apply_offer = models.CharField(max_length=5, verbose_name='応募 or 辞退')
     date_replied = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.offer_list.recruiter.user.full_name+'さんから「'+self.offer_list.job_name+'のオファー」'
+        return self.apply_offer + '「' + self.offer_list.job_name + '」'
 
 
 class RecruiterNotice(models.Model):

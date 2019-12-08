@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <ul>
+        <div><h2>返信状況一覧</h2></div>
+        <hr>
+        {% for item in object_list %}
+            <div>
+                <p>案件名:{{ item.job_seeker_notice.offer_list.job_name }}</p>
+                <p>担当者名:{{ item.job_seeker_notice.offer_list.recruiter.user.username }}</p>
+                <p>返信:{{ item.hiring }}</p>
+                <p>返信日時:{{ item.date_hire }}</p>
+                {#                <a href="{% url 'notification:apply_list_detail' item.pk %}" class="card-link">詳細を見る</a>#}
+                <hr>
+            </div>
+
+        {% endfor %}
+    </ul>
+
+{% endblock %}

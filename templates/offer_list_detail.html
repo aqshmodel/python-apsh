@@ -15,7 +15,7 @@
 
 </div>
 
-    <form class="my-form" action="{% url 'notification:reply_save' %}" method="POST">
+    <form class="my-form" action="{% url 'notification:apply_save' %}" method="POST">
         {% csrf_token %}
 
         <input type="hidden" name="offer_list" value="{{ offerlist.id }}">
@@ -28,7 +28,7 @@
 
     </form>
 
-    <form class="my-form" action="{% url 'notification:reply_save' %}" method="POST">
+    <form class="my-form" action="{% url 'notification:apply_save' %}" method="POST">
         {% csrf_token %}
 
         <input type="hidden" name="offer_list" value="{{ offerlist.id }}">

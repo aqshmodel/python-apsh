@@ -5,7 +5,7 @@
         <h4 class="alert-heading">オファーした案件名 : {{ jobseekernotice.offer_list.job_name }}</h4>
         <p>案件詳細 : {{ jobseekernotice.offer_list.job_details }}</p>
         <p>オファーした日時 : {{ jobseekernotice.offer_list.date_offered }}</p>
-        <p>返信内容 : {{ jobseekernotice.reply_offer }}</p>
+        <p>返信内容 : {{ jobseekernotice.apply_offer }}</p>
         <hr>
         <h4 class="alert-heading">{{ jobseekernotice.offer_list.job_seeker.user.username }}さんのプロフィール</h4>
         <p>性別 : {{ jobseekernotice.offer_list.job_seeker.user.jobseeker_set.first.gender }}</p>
@@ -21,8 +21,34 @@
             : {{ jobseekernotice.offer_list.job_seeker.user.jobseeker_set.first.desiredcondition_set.first.hourly_wage }}</p>
         <p class="text-muted">登録日 : {{ jobseekernotice.offer_list.job_seeker.user.date_joined }}</p>
         <p class="text-muted">最終ログイン日 : {{ jobseekernotice.offer_list.job_seeker.user.last_login }}</p>
-        {#  <p><a href="{% url 'offer:offer' %}?id_no={{ user.jobseeker_set.first.id }}" onclick="document.form1.submit();return false;">#}
-        {#      {{ user.username }}さんにオファーする</a></p>#}
+
+        <form class="my-form" action="{% url 'notification:hiring_save' %}" method="POST">
+            {% csrf_token %}
+
+            <input type="hidden" name="job_seeker_notice" value="{{ jobseekernotice.id }}">
+            <div class="form-group">
+                <div>
+                    <input type="hidden" name="hiring" value="採用">
+                    <input type="submit" class="btn btn-default" value="採用">
+                </div>
+            </div>
+
+        </form>
+
+        <form class="my-form" action="{% url 'notification:hiring_save' %}" method="POST">
+            {% csrf_token %}
+
+            <input type="hidden" name="job_seeker_notice" value="{{ jobseekernotice.id }}">
+            <div class="form-group">
+                <div>
+                    <input type="hidden" name="hiring" value="不採用">
+                    <input type="submit" class="btn btn-default" value="不採用">
+                </div>
+            </div>
+
+        </form>
+
+
         <p><a class="btn btn-primary" href="javascript:void(0);" onclick="window.history.back();">戻る</a></p>
     </div>
 
