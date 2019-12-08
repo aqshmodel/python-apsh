@@ -3,6 +3,7 @@
 <form class="my-form">
 <div>
     <H2>■ 登録情報 ■</H2>
+    <br>
 </div>
 
     ユーザーネーム : {{ user.username }}<hr>
@@ -39,7 +40,7 @@
             転職 or 副業:{{ user.jobseeker_set.first.desiredcondition_set.first.job_change }}
             <hr>
         {% else %}
-            <a class="btn btn-primary" href="{% url 'registration:desired_condition' %}">詳細な希望条件はこちらから登録</a><br>
+            <a class="btn btn-primary" href="{% url 'registration:desired_condition' %}">詳細な希望条件はこちらから登録</a><br><br>
         {% endif %}
     {% else %}
         <a class="btn btn-primary" href="{% url 'registration:jobseeker' %}">仕事のオファーを受けたい方はこちらから登録</a><br>
