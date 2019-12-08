@@ -10,7 +10,7 @@ from Aqsh.settings import EMAIL_HOST_USER
 from notification.models import JobSeekerNotice, RecruiterNotice
 from offer.models import OfferList
 from notification.forms import ApplyForm, HiringForm
-from registration.models import Recruiter
+from registration.models import Recruiter, JobSeeker
 
 
 class ApplyListView(ListView):
@@ -35,11 +35,11 @@ class HiringListView(ListView):
     context_object_name = 'hiring_list'
     template_name = 'hiring_list.html'
 
-    # def get_queryset(self):
-    #     user = self.request.user
-    #     target_recruiter = Recruiter.objects.get(user_id=user.id)
-    #     my_recruiter_id = target_recruiter.id
-    #     return JobSeekerNotice.objects.filter(offer_list__recruiter_id=my_recruiter_id)
+    def get_queryset(self):
+        user = self.request.user
+        target_job_seeker = JobSeeker.objects.get(user_id=user.id)
+        my_job_seeker_id = target_job_seeker.id
+        return RecruiterNotice.objects.filter(job_seeker_notice__offer_list__job_seeker_id=my_job_seeker_id)
 
 
 # class ReplyDetailView(generic.DetailView):

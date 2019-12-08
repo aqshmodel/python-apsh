@@ -22,6 +22,7 @@
         <p class="text-muted">登録日 : {{ jobseekernotice.offer_list.job_seeker.user.date_joined }}</p>
         <p class="text-muted">最終ログイン日 : {{ jobseekernotice.offer_list.job_seeker.user.last_login }}</p>
 
+        {% ifequal jobseekernotice.apply_offer '応募する' %}
         <form class="my-form" action="{% url 'notification:hiring_save' %}" method="POST">
             {% csrf_token %}
 
@@ -47,7 +48,7 @@
             </div>
 
         </form>
-
+        {% endifequal %}
 
         <p><a class="btn btn-primary" href="javascript:void(0);" onclick="window.history.back();">戻る</a></p>
     </div>
