@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="alert alert-success" role="alert">
+    <div class="bg-light">
   <h4 class="alert-heading">{{ user.username }}さんのプロフィール</h4>
   <p>性別 : {{ user.jobseeker_set.first.gender }}</p>
   <p>住所 : {{ user.jobseeker_set.first.address }}</p>
