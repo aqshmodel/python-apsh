@@ -4,6 +4,8 @@ from django.shortcuts import render, redirect
 from django.views.decorators.http import require_POST
 from django.views import generic
 from django.views.generic import ListView
+
+from Aqsh.settings import EMAIL_HOST_USER
 from offer.models import OfferList
 from registration.models import JobSeeker, Recruiter
 from offer.forms import OfferForm
@@ -59,7 +61,7 @@ def offer_save(request):
 
         subject = "Aqshアプリより「" + job_name + "」のオファーのお知らせ"
         message = recruiter_name + "さんからオファーが届いています。Aqshアプリにアクセスして内容をご確認ください。"
-        from_email = os.environ['EMAIL_HOST_USER']
+        from_email = EMAIL_HOST_USER
         recipient_list = to_email  # 宛先
         email = EmailMessage(subject, message, from_email,  [recipient_list])
         email.send()

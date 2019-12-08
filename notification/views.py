@@ -5,6 +5,8 @@ from django.shortcuts import redirect, render
 from django.views import generic
 from django.views.decorators.http import require_POST
 from django.views.generic import ListView
+
+from Aqsh.settings import EMAIL_HOST_USER
 from notification.models import JobSeekerNotice, RecruiterNotice
 from offer.models import OfferList
 from notification.forms import ApplyForm, HiringForm
@@ -61,7 +63,7 @@ def apply_save(request):
         form.save(commit=True)
         subject = "Aqshアプリより「" + target_recruiter.job_name + "」へ" + job_seeker_name + "さんより返信のお知らせ"
         message = job_seeker_name + "さんからあなたのオファー" + target_recruiter.job_name + "へ返信が届いています。Aqshアプリにアクセスして内容をご確認ください。"
-        from_email = os.environ['EMAIL_HOST_USER']
+        from_email = EMAIL_HOST_USER
         recipient_list = to_email  # 宛先
         email = EmailMessage(subject, message, from_email, [recipient_list])
         email.send()
@@ -88,7 +90,7 @@ def hiring_save(request):
         subject = "Aqshアプリよりさんから返信のお知らせ"
         message = recruiter_name + "さんからあなたが応募した案件" + job_name + "の返信が届いています。" + request.POST[
             'hiring'] + "となりました。Aqshアプリにアクセスして内容をご確認ください。"
-        from_email = os.environ['EMAIL_HOST_USER']
+        from_email = EMAIL_HOST_USER
         recipient_list = to_email  # 宛先
         email = EmailMessage(subject, message, from_email, [recipient_list])
         email.send()
